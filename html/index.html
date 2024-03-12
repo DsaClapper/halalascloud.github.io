@@ -1,0 +1,135 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Halalas Cloud</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/halalas_cloud_apple.png">
+  <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/halalas_cloud_apple.png">
+    <link rel="icon" type="image/png" href="halalas_cloud32.png">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="cyan" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+</head>
+<link rel="stylesheet" href="home.css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<body>
+    <div id="bg"></div>
+    <div class="cont">
+        <a><img src="halalas_cloud2.png" alt="Hc" width="200" height="200"></a>
+        <input type="email" id="email" placeholder="Email" autocomplete="off" class="cr" />
+        <input type="password" id="pass" placeholder="Password" autocomplete="off" class="cr" /><br />
+        <button onclick="login()" id="submit" class="but">Login</button>
+        <p style="color:white; font-family: Supr;font-size: 15px;-moz-user-select:text;-webkit-user-select: text;user-select: text;" id="cracc">Don't have an account? <b><a href="/cracc" style="color: rgb(58, 58, 197);text-decoration: none;">Create one</a></b></p>
+        <p id="res" hidden="true" style="color: rgb(252, 4, 4);font-family: Supr;font-size: 15px;"></p>
+    </div>
+</body>
+
+<script>
+    function login() {
+        let email = document.getElementById("email");
+        let pass = document.getElementById("pass");
+        if (
+            email.value === "" ||
+            email.value.trim() === "" ||
+            email.value.startsWith(" ") ||
+            pass.value === "" ||
+            pass.value.trim() === "" ||
+            pass.value.startsWith(" ")
+        ) {
+            return (email.value = ""), (pass.value = "");
+        }
+        fetch("/cr", {
+            method: "POST",
+            crossDomain: true,
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify({
+                email: email.value,
+                pass: pass.value,
+            })
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.text();
+            })
+            .then((data) => {
+                if (data === "logged in") {
+                    fetch("https://api.ipify.org/?format=json")
+                        .then((i) => {
+                            i.json().then((j) => {
+                                localStorage.setItem("email", email.value);
+                                localStorage.setItem("ip", j.ip);
+                                localStorage.setItem("autologin", true);
+                            });
+                        })
+                        .then((w) => {
+                            window.location = "/dash";
+                        });
+                } else {
+                    document.getElementById("res").hidden = false;
+                    document.getElementById("res").innerHTML = data;
+                    setTimeout(() => {
+                        document.getElementById("res").hidden = true;
+                    }, 2500);
+                }
+            })
+            .catch((error) => {
+                console.error("Fetch error:", error);
+            });
+    }
+
+    async function autoLogin() {
+        if (await !localStorage.getItem("email")) return;
+        fetch("/ipse", {
+            method: "POST",
+            crossDomain: true,
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify({
+                ip: await localStorage.getItem("ip"),
+                e: await localStorage.getItem("email"),
+                a: await localStorage.getItem("autologin"),
+            }),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.text();
+            })
+            .then((data) => {
+                if (data != "ok") return;
+                else return (window.location = "/dash");
+            });
+    }
+
+    function setBodyHeight() {
+        document.body.style.height = window.innerHeight + "px";
+    }
+    window.addEventListener("keydown", keyPressed)
+    function keyPressed(e) {
+        if(e.keyCode === 13) {
+            login()
+        }
+}
+    window.onload = autoLogin;
+    window.addEventListener("resize", setBodyHeight);
+    window.addEventListener("orientationchange", setBodyHeight);
+    // Initial call to set body height
+    setBodyHeight();
+</script>
+
+</html>
