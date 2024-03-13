@@ -139,7 +139,7 @@
     async function checkServer() {
         await fetch("http://51.20.185.222:2000")
                 .catch((error) => {
-                    if(error.message) {
+                    if(error.message.startsWith("Failed")) {
                         return (window.location = "./servers-offline.html")
                     }
             });
