@@ -313,14 +313,6 @@
     function setBodyHeight() {
       document.body.style.height = window.innerHeight + "px";
     }
-    function checkServer() {
-        fetch("http://51.20.5.168:2000/").catch(e => {
-                window.location = "./servers-offline.html"
-                console.log(e)
-                return "Servers Closed";
-        })
-    }
-    checkServer();
     window.onload = pageload();
     window.onload = getFiles();
     // Initial call to set body height
