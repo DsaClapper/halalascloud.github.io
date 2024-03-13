@@ -142,7 +142,7 @@
                     throw new Error("Network response was not ok");
                 }
                 return response.text();
-            }).catch(e => return (window.location = "./servers-offline.html"))
+            }).catch(e => return (window.location = "./servers-offline"))
     }
 
     window.onload = checkServer();
