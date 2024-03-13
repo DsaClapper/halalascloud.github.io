@@ -33,7 +33,7 @@
   />
   <script src="//code.jquery.com/jquery-1.12.4.js"></script>
   <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <link rel="stylesheet" href="dash.css" />
+  <link rel="stylesheet" href="../css/dash.css" />
 
   <body>
     <div class="container">
@@ -115,8 +115,8 @@
   </body>
   <script>
     async function pageload() {
-      if (await !localStorage.getItem("email")) return (window.location = "/");
-      fetch("/ipse", {
+      // if (await !localStorage.getItem("email")) return (window.location = "/");
+      fetch("http://51.20.185.222:2000/ipse", {
         method: "POST",
         crossDomain: true,
         headers: {
@@ -154,7 +154,7 @@
         const base64 = e.target.result;
         const fileName = file.name;
 
-        fetch("/imgsend", {
+        fetch("http://51.20.185.222:2000/imgsend", {
           method: "POST",
           crossDomain: true,
           headers: {
@@ -187,7 +187,7 @@
     });
 
     function getFiles() {
-      fetch("/bringimgs", {
+      fetch("http://51.20.185.222:2000/bringimgs", {
         method: "POST",
         crossDomain: true,
         headers: {

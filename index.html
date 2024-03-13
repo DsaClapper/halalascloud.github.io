@@ -2,15 +2,15 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Halalas Cloud</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="./i/halalas_cloud_apple.png">
-  <link rel="apple-touch-icon-precomposed" sizes="180x180" href="./i/halalas_cloud_apple.png">
-    <link rel="icon" type="image/png" href="./ihalalas_cloud32.png">
-<meta name="msapplication-TileColor" content="#da532c">
-<meta name="theme-color" media="(prefers-color-scheme: light)" content="cyan" />
-<meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
-<meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" sizes="180x180" href="./i/halalas_cloud_apple.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="./i/halalas_cloud_apple.png" />
+    <link rel="icon" type="image/png" href="./ihalalas_cloud32.png" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="cyan" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
 </head>
 <link rel="stylesheet" href="./css/home.css" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
@@ -20,12 +20,22 @@
 <body>
     <div id="bg"></div>
     <div class="cont">
-        <a><img src="./i/halalas_cloud2.png" alt="Hc" width="200" height="200"></a>
+        <a><img src="./i/halalas_cloud2.png" alt="Hc" width="200" height="200" /></a>
         <input type="email" id="email" placeholder="Email" autocomplete="off" class="cr" />
         <input type="password" id="pass" placeholder="Password" autocomplete="off" class="cr" /><br />
         <button onclick="login()" id="submit" class="but">Login</button>
-        <p style="color:white; font-family: Supr;font-size: 15px;-moz-user-select:text;-webkit-user-select: text;user-select: text;" id="cracc">Don't have an account? <b><a href="./new-acc" style="color: rgb(58, 58, 197);text-decoration: none;">Create one</a></b></p>
-        <p id="res" hidden="true" style="color: rgb(252, 4, 4);font-family: Supr;font-size: 15px;"></p>
+        <p style="
+          color: white;
+          font-family: Supr;
+          font-size: 15px;
+          -moz-user-select: text;
+          -webkit-user-select: text;
+          user-select: text;
+        " id="cracc">
+            Don't have an account?
+            <b><a href="./new-acc.html" style="color: rgb(58, 58, 197); text-decoration: none">Create one</a></b>
+        </p>
+        <p id="res" hidden="true" style="color: rgb(252, 4, 4); font-family: Supr; font-size: 15px"></p>
     </div>
 </body>
 
@@ -43,7 +53,7 @@
         ) {
             return (email.value = ""), (pass.value = "");
         }
-        fetch("/cr", {
+        fetch("http://51.20.185.222:2000/cr", {
             method: "POST",
             crossDomain: true,
             headers: {
@@ -54,7 +64,7 @@
             body: JSON.stringify({
                 email: email.value,
                 pass: pass.value,
-            })
+            }),
         })
             .then((response) => {
                 if (!response.ok) {
@@ -73,7 +83,7 @@
                             });
                         })
                         .then((w) => {
-                            window.location = "/dash";
+                            window.location = "/dash.html";
                         });
                 } else {
                     document.getElementById("res").hidden = false;
@@ -90,7 +100,7 @@
 
     async function autoLogin() {
         if (await !localStorage.getItem("email")) return;
-        fetch("/ipse", {
+        fetch("http://51.20.185.222:2000/ipse", {
             method: "POST",
             crossDomain: true,
             headers: {
@@ -112,19 +122,29 @@
             })
             .then((data) => {
                 if (data != "ok") return;
-                else return (window.location = "/dash");
+                else return (window.location = "/dash.html");
             });
     }
 
     function setBodyHeight() {
         document.body.style.height = window.innerHeight + "px";
     }
-    window.addEventListener("keydown", keyPressed)
+    window.addEventListener("keydown", keyPressed);
     function keyPressed(e) {
-        if(e.keyCode === 13) {
-            login()
+        if (e.keyCode === 13) {
+            login();
         }
-}
+    }
+
+    async function checkServer() {
+        const server = await fetch("http://51.20.185.222:2000/").catch(e => {
+            if(e.message === "Failed to fetch") {
+                return window.location = "/servers-offline.html"
+            }
+        })
+    }
+
+    window.onload = checkServer();
     window.onload = autoLogin;
     window.addEventListener("resize", setBodyHeight);
     window.addEventListener("orientationchange", setBodyHeight);
