@@ -116,7 +116,7 @@
   <script>
     async function pageload() {
       // if (await !localStorage.getItem("email")) return (window.location = "/");
-      fetch(`${process.env.SADR}/ipse`, {
+      fetch("http://51.20.185.222:2000/ipse", {
         method: "POST",
         crossDomain: true,
         headers: {
@@ -154,7 +154,7 @@
         const base64 = e.target.result;
         const fileName = file.name;
 
-        fetch(`${process.env.SADR}/imgsend`, {
+        fetch("http://51.20.185.222:2000/imgsend", {
           method: "POST",
           crossDomain: true,
           headers: {
@@ -187,7 +187,7 @@
     });
 
     function getFiles() {
-      fetch(`${process.env.SADR}/bringimgs`, {
+      fetch("http://51.20.185.222:2000/bringimgs", {
         method: "POST",
         crossDomain: true,
         headers: {

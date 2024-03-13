@@ -6,7 +6,7 @@
     <title>Halalas Cloud</title>
     <link rel="apple-touch-icon" sizes="180x180" href="./i/halalas_cloud_apple.png" />
     <link rel="apple-touch-icon-precomposed" sizes="180x180" href="./i/halalas_cloud_apple.png" />
-    <link rel="icon" type="image/png" href="./ihalalas_cloud32.png" />
+    <link rel="icon" type="image/png" href="./i/halalas_cloud32.png" />
     <meta name="msapplication-TileColor" content="#da532c" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="cyan" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
@@ -53,7 +53,7 @@
         ) {
             return (email.value = ""), (pass.value = "");
         }
-        fetch(`${process.env.SADR}/cr`, {
+        fetch("http://51.20.185.222:2000/cr", {
             method: "POST",
             crossDomain: true,
             headers: {
@@ -100,7 +100,7 @@
 
     async function autoLogin() {
         if (await !localStorage.getItem("email")) return;
-        fetch(`${process.env.SADR}/ipse`, {
+        fetch("http://51.20.185.222:2000/ipse", {
             method: "POST",
             crossDomain: true,
             headers: {
@@ -137,7 +137,7 @@
     }
 
     async function checkServer() {
-        const server = await fetch(`${process.env.SADR}`).catch(e => {
+        const server = await fetch("http://51.20.185.222:2000/").catch(e => {
             if(e.message === "Failed to fetch") {
                 return window.location = "/servers-offline.html"
             }
