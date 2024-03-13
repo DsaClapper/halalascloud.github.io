@@ -53,7 +53,7 @@
         ) {
             return (email.value = ""), (pass.value = "");
         }
-        fetch("http://51.20.185.222:2000/cr", {
+        fetch("http://51.20.5.168:2000/cr", {
             method: "POST",
             crossDomain: true,
             headers: {
@@ -100,7 +100,7 @@
 
     async function autoLogin() {
         if (await !localStorage.getItem("email")) return;
-        fetch("http://51.20.185.222:2000/ipse", {
+        fetch("http://51.20.5.168:2000/ipse", {
             method: "POST",
             crossDomain: true,
             headers: {
@@ -136,21 +136,14 @@
         }
     }
 
-    async function checkServer() {
-        await fetch("http://51.20.185.222:2000")
-               .then(response => {
-     if (!response.ok) {
-       throw new Error('Error in request');
-     }
-     return response.json();
-   })
-   .catch(error => {
-    return (window.location = "./servers-offline.html")
-     console.error('An error occurred:', error);
-   });
+    function checkServer() {
+        fetch("http://51.20.5.168:2000/").catch(e => {
+                window.location = "./servers-offline.html"
+                console.log(e)
+                return "Servers Closed";
+        })
     }
-
-    window.onload = checkServer();
+    checkServer();
     window.onload = autoLogin;
     window.addEventListener("resize", setBodyHeight);
     window.addEventListener("orientationchange", setBodyHeight);

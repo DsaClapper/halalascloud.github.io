@@ -95,12 +95,13 @@
       });
     }
     function checkServer() {
-        fetch("http://51.20.185.222:2000").then((response =>}).catch(e => {
-                return (window.location = "./servers-offline");
+        fetch("http://51.20.5.168:2000/").catch(e => {
+                window.location = "./servers-offline.html"
+                console.log(e)
+                return "Servers Closed";
         })
     }
-
-    window.onload = checkServer();
+    checkServer();
     document.getElementById("create").addEventListener("click", createAcc);
   </script>
 </html>

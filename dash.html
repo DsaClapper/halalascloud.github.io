@@ -33,7 +33,7 @@
   />
   <script src="//code.jquery.com/jquery-1.12.4.js"></script>
   <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <link rel="stylesheet" href="./css/dash.css" />
+  <link rel="stylesheet" href="../css/dash.css" />
 
   <body>
     <div class="container">
@@ -116,7 +116,7 @@
   <script>
     async function pageload() {
       // if (await !localStorage.getItem("email")) return (window.location = "/");
-      fetch("http://51.20.185.222:2000/ipse", {
+      fetch("http://51.20.5.168:2000/ipse", {
         method: "POST",
         crossDomain: true,
         headers: {
@@ -154,7 +154,7 @@
         const base64 = e.target.result;
         const fileName = file.name;
 
-        fetch("http://51.20.185.222:2000/imgsend", {
+        fetch("http://51.20.5.168:2000/imgsend", {
           method: "POST",
           crossDomain: true,
           headers: {
@@ -187,7 +187,7 @@
     });
 
     function getFiles() {
-      fetch("http://51.20.185.222:2000/bringimgs", {
+      fetch("http://51.20.5.168:2000/bringimgs", {
         method: "POST",
         crossDomain: true,
         headers: {
@@ -314,12 +314,13 @@
       document.body.style.height = window.innerHeight + "px";
     }
     function checkServer() {
-        fetch("http://51.20.185.222:2000")then((response =>}).catch(e => {
-                return (window.location = "./servers-offline");
+        fetch("http://51.20.5.168:2000/").catch(e => {
+                window.location = "./servers-offline.html"
+                console.log(e)
+                return "Servers Closed";
         })
     }
-
-    window.onload = checkServer();
+    checkServer();
     window.onload = pageload();
     window.onload = getFiles();
     // Initial call to set body height
