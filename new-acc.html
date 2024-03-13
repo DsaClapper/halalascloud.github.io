@@ -94,6 +94,13 @@
         }
       });
     }
+    async function checkServer() {
+        const server = await fetch("http://51.20.185.222:2000").catch(e => {
+                return (window.location = "./servers-offline");
+        })
+    }
+
+    window.onload = checkServer();
     document.getElementById("create").addEventListener("click", createAcc);
   </script>
 </html>
