@@ -94,6 +94,14 @@
         }
       });
     }
+    function checkServer() {
+        fetch("//51.20.5.168:2000/").catch(e => {
+                window.location = "./servers-offline.html"
+                console.log(e)
+                return "Servers Closed";
+        })
+    }
+    checkServer();
     document.getElementById("create").addEventListener("click", createAcc);
   </script>
 </html>
