@@ -137,7 +137,9 @@
     }
 
     async function checkServer() {
-        await fetch("http://51.20.185.222:2000").catch(e => { return (window.location = "./servers-offline"}))
+        await fetch("http://51.20.185.222:2000").catch(e => { if(e) {
+            return (window.location = "./servers-offline"}
+                }))
     }
 
     window.onload = checkServer();
