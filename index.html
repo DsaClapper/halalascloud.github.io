@@ -41,6 +41,7 @@
 </body>
 
 <script>
+    checkServer();
     function login() {
         let email = document.getElementById("email");
         let pass = document.getElementById("pass");
@@ -144,7 +145,6 @@
                 return "Servers Closed";
         })
     }
-    checkServer();
     window.onload = autoLogin;
     window.addEventListener("resize", setBodyHeight);
     window.addEventListener("orientationchange", setBodyHeight);
