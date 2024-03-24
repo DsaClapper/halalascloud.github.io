@@ -287,11 +287,12 @@
         $(".cont").fadeOut(250, () => {
             $("#loading-page").fadeIn(1000, () => {
                 $(".main-page").fadeIn(250, () => {
-                    $("#loading-page").fadeOut(500)
+                    $("#loading-page").fadeOut(500, () => {
+                        getFiles();
+                    })
                 })
             });
         })
-        getFiles();
     }
     function createAcc(e) {
         let inputs = document.querySelectorAll("input");
