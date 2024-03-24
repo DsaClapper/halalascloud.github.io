@@ -13,7 +13,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
 </head>
-<link rel="stylesheet" href="./css/home.css"/>
+<link rel="stylesheet" href="./css/home.css" />
 <link rel="stylesheet" href="./css/new-acc-page.css">
 <link rel="stylesheet" href="./css/dash.css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
@@ -126,7 +126,6 @@
             <div id="progress-bar">
                 <div id="progress"></div>
             </div>
-            <!-- <div id="spinner"></div> -->
         </div>
     </div>
 </body>
@@ -180,7 +179,6 @@
                             });
                         })
                         .then((w) => {
-                            // window.location = "/dash.html";
                             dashpage()
                         });
                 } else {
@@ -220,7 +218,7 @@
             })
             .then((data) => {
                 if (data != "ok") return;
-                else dashpage()//return (window.location = "/dash.html");
+                else dashpage();
             });
     }
 
@@ -324,7 +322,6 @@
         });
         $("#confirm").click(() => {
             localStorage.clear();
-            // window.location = "/";
             document.getElementById("main-page").style = "display: none";
             document.getElementById("logout-popup").style = "display: none";
             document.getElementById("logout-popup").hidden = true
@@ -335,7 +332,7 @@
     document.getElementById("create").addEventListener("click", createAcc);
 
     async function pageload() {
-        if (await !localStorage.getItem("email")) return loginpage()//(window.location = "/");
+        if (await !localStorage.getItem("email")) return loginpage();
         fetch("https://hc-server.onrender.com/ipse", {
             method: "POST",
             crossDomain: true,
@@ -357,13 +354,8 @@
                 return response.text();
             })
             .then((data) => {
-                if (data != "ok") return loginpage()//(window.location = "/");
+                if (data != "ok") return loginpage();
             });
-        // fetch(
-        //     `/ipsend?ip=${localStorage.getItem("ip")}&email=${localStorage.getItem(
-        //         "email"
-        //     )}`
-        // )
     }
     const fileInput = document.getElementById("file-box");
 
@@ -398,7 +390,6 @@
                             "This Image Already Exists On The Cloud!";
                     } else {
                         window.location.reload();
-                        // document.getElementById("msg").innerHTML = "Saved! Refresh To Use The Image!"
                     }
                 });
             fileInput.value = "";
@@ -471,9 +462,6 @@
         $(".main-page").hide("drop", { direction: "right" }, 500);
         $(".file-page").show("drop", { direction: "left" }, 500);
         $("#file-button").fadeIn(1000);
-        // $("#main-page").hide("slide", { direction: "right" }, 250, function () {
-        //     $(".file-page").fadeIn("fast")//);
-        // });
     }
 
     function OpenSelection() {
