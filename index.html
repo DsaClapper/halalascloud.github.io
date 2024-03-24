@@ -1,0 +1,489 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Halalas Cloud</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="./i/halalas_cloud_apple.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="./i/halalas_cloud_apple.png" />
+    <link rel="icon" type="image/png" href="./i/halalas_cloud32.png" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="cyan" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+</head>
+<link rel="stylesheet" href="./css/home.css" />
+<link rel="stylesheet" href="./css/new-acc-page.css">
+<link rel="stylesheet" href="./css/dash.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</script>
+
+<body>
+    <div id="bg"></div>
+    <div class="cont">
+        <a><img src="./i/halalas_cloud2.png" alt="Hc" width="200" height="200" /></a>
+        <input type="email" id="email" placeholder="Email" autocomplete="off" class="cr" />
+        <input type="password" id="pass" placeholder="Password" autocomplete="off" class="cr" /><br />
+        <button onclick="login()" id="submit" class="but">Login</button>
+        <p style="
+          color: white;
+          font-family: Supr;
+          font-size: 15px;
+          -moz-user-select: text;
+          -webkit-user-select: text;
+          user-select: text;
+        " id="cracc">
+            Don't have an account?
+            <b><a onclick="accpage()" style="color: rgb(58, 58, 197); text-decoration: none;cursor: pointer;">Create
+                    one</a></b>
+        </p>
+        <p id="res" hidden="true" style="color: rgb(252, 4, 4); font-family: Supr; font-size: 15px"></p>
+    </div>
+    <div class="acccont" id="form" style="display: none;">
+        <a><img src="./i/halalas_cloud2.png" alt="Hc" width="200" height="200" /></a>
+        <input type="text" placeholder="Username" maxlength="20" class="creds" required="true" name="username" />
+        <input type="email" placeholder="Email" class="creds" required="true" name="email" />
+        <input type="password" placeholder="Password" class="creds" required="true" minlength="10" name="password" />
+        <input type="password" placeholder="Confirm Password" class="creds" required="true" id="cp" minlength="10"
+            name="cp" />
+        <input type="button" id="create" value="Create Account" />
+        <p style="
+          margin: 0px;
+          color: #fff;
+          font-family: Supr;
+          font-size: 15px;
+          -moz-user-select: text;
+          -webkit-user-select: text;
+          user-select: text;
+          position: relative;
+          right: 27%;
+          display: flex;
+          flex-direction: row;">
+            <input type="checkbox" id="remme" style="cursor: pointer;" />Remember
+            Me
+        </p><br>
+        <p style="
+    margin: 0px;
+    color: #fff;
+    font-family: Supr;
+    font-size: 17px;
+    -moz-user-select: text;
+    -webkit-user-select: text;
+    user-select: text;
+    position: relative;
+    right: 2px;">Already have an account? <b><a onclick="loginpage()"
+                    style="color: rgb(58, 58, 197); text-decoration: none;cursor: pointer;">Login</a></b></p>
+    </div>
+    <div class="dashcontainer">
+        <div class="file-page" hidden="true" id="file-page-div">
+            <div id="text-elements">
+                <h1 style="margin: 0">Files</h1>
+                <input type="file" id="file-box" hidden="true" accept=".png, .jpeg, .jpg, .gif, .txt" />
+                <input type="button" id="file-button" hidden="true" value="+" onclick="OpenSelection()" />
+                <p id="msg"></p>
+            </div>
+        </div>
+        <div class="main-page" id="main-page" style="display: none">
+            <div class="logout">
+                <button onclick="logout()" style="font-size: 20px" id="logoutbtn">
+                    Logout
+                </button>
+            </div>
+            <div id="elements">
+                <h1>Your Files</h1>
+                <input type="button" value="Access Your Files" onclick="changePage()" />
+            </div>
+        </div>
+        <div class="logout-popup" hidden="true" style="display: none" id="logout-popup">
+            <div id="logout-buttons" class="logout-buttons">
+                <button id="confirm" style="
+            margin: 10px;
+            padding: 10px;
+            background-color: rgb(9, 9, 121);
+            cursor: pointer;
+          ">
+                    Confirm
+                </button>
+                <button id="cancel" style="
+            margin: 10px;
+            padding: 10px;
+            cursor: pointer;
+            background-color: white;
+          ">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="loading-page" style="display: none" class="loading-page">
+        <div id="loading-container" class="loading-container">
+            <div id="loading-text" style="font-size: 30px; color: white; font-family: Supr">
+                Loading
+            </div>
+            <div id="progress-bar">
+                <div id="progress"></div>
+            </div>
+            <!-- <div id="spinner"></div> -->
+        </div>
+    </div>
+</body>
+
+<script>
+    fetch("https://hc-server.onrender.com").catch((e) => {
+        window.location = "./servers-offline.html";
+        console.log(e);
+        return "Servers Offline!";
+    });
+    function login() {
+        let email = document.getElementById("email");
+        let pass = document.getElementById("pass");
+        if (
+            email.value === "" ||
+            email.value.trim() === "" ||
+            email.value.startsWith(" ") ||
+            pass.value === "" ||
+            pass.value.trim() === "" ||
+            pass.value.startsWith(" ")
+        ) {
+            return (email.value = ""), (pass.value = "");
+        }
+        fetch("https://hc-server.onrender.com/cr", {
+            method: "POST",
+            crossDomain: true,
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify({
+                email: email.value,
+                pass: pass.value,
+            }),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.text();
+            })
+            .then((data) => {
+                if (data === "logged in") {
+                    fetch("https://api.ipify.org/?format=json")
+                        .then((i) => {
+                            i.json().then((j) => {
+                                localStorage.setItem("email", email.value);
+                                localStorage.setItem("ip", j.ip);
+                                localStorage.setItem("autologin", true);
+                            });
+                        })
+                        .then((w) => {
+                            // window.location = "/dash.html";
+                            dashpage()
+                        });
+                } else {
+                    document.getElementById("res").hidden = false;
+                    document.getElementById("res").innerHTML = data;
+                    setTimeout(() => {
+                        document.getElementById("res").hidden = true;
+                    }, 2500);
+                }
+            })
+            .catch((error) => {
+                console.error("Fetch error:", error);
+            });
+    }
+
+    async function autoLogin() {
+        if (await !localStorage.getItem("email")) return;
+        fetch("https://hc-server.onrender.com/ipse", {
+            method: "POST",
+            crossDomain: true,
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify({
+                ip: await localStorage.getItem("ip"),
+                e: await localStorage.getItem("email"),
+                a: await localStorage.getItem("autologin"),
+            }),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.text();
+            })
+            .then((data) => {
+                if (data != "ok") return;
+                else dashpage()//return (window.location = "/dash.html");
+            });
+    }
+
+    function setBodyHeight() {
+        document.body.style.height = window.innerHeight + "px";
+    }
+    window.addEventListener("keydown", keyPressed);
+    function keyPressed(e) {
+        if (e.keyCode === 13) {
+            login();
+        }
+    }
+
+
+    function progressBar() {
+        let i = 0;
+        let pr = document.getElementById("progress");
+        let text = document.getElementById("loading-text");
+        let dots = [".", "..", "..."];
+        let d = 0;
+        if (i == 0) {
+            setInterval(() => {
+                if (i <= 100) {
+                    pr.style.width = i++ + "%";
+                }
+            }, 15);
+            if (i <= 100) {
+                setInterval(() => {
+                    if (d === 3) {
+                        d = 0;
+                    }
+                    if (d < dots.length) {
+                        text.innerHTML = `Loading${dots[d]}`;
+                        d++;
+                    }
+                }, 150);
+            }
+        }
+    }
+
+    function accpage() {
+        progressBar();
+        $(".cont").fadeOut(250, () => {
+            $("#loading-page").fadeIn(1000, () => {
+                $("#form").fadeIn(250, () => {
+                    $("#loading-page").fadeOut(500)
+                })
+            });
+        })
+    }
+    function loginpage() {
+        progressBar();
+        $("#form").fadeOut(250, () => {
+            $("#loading-page").fadeIn(1000, () => {
+                $(".cont").fadeIn(250, () => {
+                    document.querySelectorAll(".cr").forEach(m => m.value = "")
+                    $("#loading-page").fadeOut(500)
+                })
+            });
+        })
+    }
+    function dashpage() {
+        progressBar();
+        $(".cont").fadeOut(250, () => {
+            $("#loading-page").fadeIn(1000, () => {
+                $(".main-page").fadeIn(250, () => {
+                    $("#loading-page").fadeOut(500)
+                })
+            });
+        })
+        getFiles();
+    }
+    function createAcc(e) {
+        let inputs = document.querySelectorAll("input");
+        inputs.forEach((i) => {
+            if (i.id === "create") return;
+            if (
+                (i.required === true && i.value === "") ||
+                i.value.trim() === "" ||
+                i.value.startsWith(" ")
+            ) {
+                i.style.boxShadow = "0px 0px 15px rgb(252, 4, 4)";
+                if (i.name === "cp") {
+                    return (i.placeholder = `Please confirm your password`);
+                }
+                i.placeholder = `Please put your ${i.name.toLowerCase()}`;
+            } else {
+                i.style.boxShadow = "none";
+            }
+        });
+    }
+    function logout() {
+        $(".logout-popup").show(1000);
+        document.getElementById("main-page").style.filter = "blur(4px)";
+        document.getElementById("main-page").style.transition = "filter 4s";
+
+        $("#cancel").click(() => {
+            $(".logout-popup").hide(1000);
+            document.getElementById("main-page").style.filter = "blur(0px)";
+            document.getElementById("main-page").style.transition = "filter 2s";
+        });
+        $("#confirm").click(() => {
+            localStorage.clear();
+            // window.location = "/";
+            document.getElementById("main-page").style = "display: none";
+            document.getElementById("logout-popup").style = "display: none";
+            document.getElementById("logout-popup").hidden = true
+            loginpage()
+            window.location.reload()
+        });
+    }
+    document.getElementById("create").addEventListener("click", createAcc);
+
+    async function pageload() {
+        if (await !localStorage.getItem("email")) return loginpage()//(window.location = "/");
+        fetch("https://hc-server.onrender.com/ipse", {
+            method: "POST",
+            crossDomain: true,
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify({
+                ip: localStorage.getItem("ip"),
+                e: localStorage.getItem("email"),
+                a: localStorage.getItem("autologin"),
+            }),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.text();
+            })
+            .then((data) => {
+                if (data != "ok") return loginpage()//(window.location = "/");
+            });
+        // fetch(
+        //     `/ipsend?ip=${localStorage.getItem("ip")}&email=${localStorage.getItem(
+        //         "email"
+        //     )}`
+        // )
+    }
+    const fileInput = document.getElementById("file-box");
+
+    fileInput.addEventListener("change", (e) => {
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        reader.onload = async function (e) {
+            const base64 = e.target.result;
+            const fileName = file.name;
+
+            fetch("https://hc-server.onrender.com/imgsend", {
+                method: "POST",
+                crossDomain: true,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    e: localStorage.getItem("email"),
+                    data: e.target.result,
+                    name: fileName,
+                }),
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.text();
+                })
+                .then((data) => {
+                    if (data === "exists") {
+                        document.getElementById("msg").innerHTML =
+                            "This Image Already Exists On The Cloud!";
+                    } else {
+                        window.location.reload();
+                        // document.getElementById("msg").innerHTML = "Saved! Refresh To Use The Image!"
+                    }
+                });
+            fileInput.value = "";
+        };
+        reader.readAsDataURL(file);
+    });
+
+    function getFiles() {
+        fetch("https://hc-server.onrender.com/bringimgs", {
+            method: "POST",
+            crossDomain: true,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                em: localStorage.getItem("email"),
+            }),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.text();
+            })
+            .then((data) => {
+                let json = JSON.parse(data);
+                let objval = Object.values(json).map((m) => m.base);
+                let objkeys = Object.keys(json);
+                let i = 0;
+                objval.forEach((l) => {
+                    let splitt = l.split(";")[0].split(":")[1];
+                    if (splitt.startsWith("image")) {
+                        let img = document.createElement("img");
+                        let newImg = document
+                            .getElementById("file-page-div")
+                            .appendChild(img);
+                        newImg.id = objkeys[i];
+                        newImg.className = "images";
+                        newImg.src = l;
+                        newImg.width = 200;
+                    } else if (splitt.startsWith("text")) {
+                        let file = document.createElement("a");
+                        let newFile = document
+                            .getElementById("file-page-div")
+                            .appendChild(file);
+                        newFile.id = objkeys[i];
+                        newFile.className = "files";
+                        newFile.href = l;
+                        newFile.addEventListener("click", OpenUrl);
+                        newFile.innerHTML = objkeys[i];
+                    }
+                    i++;
+                });
+            });
+    }
+
+    function OpenUrl(e) {
+        const src = e.srcElement.href.split(",")[1];
+        const byteCharacters = atob(src);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: "text/plain" });
+        var imageUrl = URL.createObjectURL(blob);
+        window.open(imageUrl, "bla");
+    }
+    async function changePage() {
+        $(".main-page").hide("drop", { direction: "right" }, 500);
+        $(".file-page").show("drop", { direction: "left" }, 500);
+        $("#file-button").fadeIn(1000);
+        // $("#main-page").hide("slide", { direction: "right" }, 250, function () {
+        //     $(".file-page").fadeIn("fast")//);
+        // });
+    }
+
+    function OpenSelection() {
+        document.getElementById("file-box").click();
+    }
+    window.onload = autoLogin;
+    window.addEventListener("resize", setBodyHeight);
+    window.addEventListener("orientationchange", setBodyHeight);
+    // Initial call to set body height
+    setBodyHeight();
+</script>
+
+</html>
