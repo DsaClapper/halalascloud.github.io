@@ -269,13 +269,15 @@
             });
         })
     }
-    function loginpage() {
+    function loginpage(message) {
         progressBar();
         $("#form").fadeOut(250, () => {
             $("#loading-page").fadeIn(1000, () => {
                 $(".cont").fadeIn(250, () => {
                     document.querySelectorAll(".cr").forEach(m => m.value = "")
-                    $("#loading-page").fadeOut(500)
+                    $("#loading-page").fadeOut(500, () => {
+                        if(message === "logout") return window.location.reload()
+                    })
                 })
             });
         })
@@ -325,8 +327,7 @@
             document.getElementById("main-page").style = "display: none";
             document.getElementById("logout-popup").style = "display: none";
             document.getElementById("logout-popup").hidden = true
-            loginpage()
-            window.location.reload()
+            loginpage("logout")
         });
     }
     document.getElementById("create").addEventListener("click", createAcc);
