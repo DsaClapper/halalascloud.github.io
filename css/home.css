@@ -57,8 +57,6 @@ overflow: hidden;
     text-align: center;
     background-color: transparent;
     padding: 20px;
-    border-radius: 10px;
-    border-radius: 50px;
     -moz-user-select: none;
 -webkit-user-select: none;
 user-select: none;
@@ -85,20 +83,22 @@ user-select: none;
 }
 
 .but {
+    transition: border-color, background-color 1.5s;
     font-family: "Supr", Arial, sans-serif;
-    background-color: transparent;
+    background-color: #1b3191f2;;
     color: #fff;
-    border: 3px solid rgba(9, 9, 121, 0.637);
+    border: 3px solid;
+    border-color: #1a2f8d;
     width: 125px;
     height: 30px;
-    border-radius: 10px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 16px;
     text-align: center;
-    transition: background-color 1s;
 }
 
 .but:hover {
+    transition: background-color, border-color 1.5s;
     background-color: rgba(9,9,121,1);
-    transition: background-color 1s;
+    border-color: rgba(9, 9, 121, 0.637);
 }
