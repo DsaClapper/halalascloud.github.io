@@ -319,7 +319,7 @@
         console.log(index)
         if(index === 0 && checkEmail() == "email ok" && checkPass() == "pass ok" && confirmPass() =="pass ok") {
             console.log("bla")
-            fetch("http://localhost:8000/cracc", {
+            fetch("https://hc-server.onrender.com/cracc", {
                 method: "POST",
             crossDomain: true,
             headers: {
