@@ -133,13 +133,11 @@
 <script>
     fetch("https://hc-server.onrender.com").catch((e) => {
         window.location = "./servers-offline.html";
-        console.log(e);
         return "Servers Offline!";
     });
     function login(e, p, a) {
         let email = e || document.getElementById("email");
         let pass = p || document.getElementById("pass");
-        console.log(email)
         if (
             email.value === "" ||
             email.value.trim() === "" ||
@@ -176,7 +174,7 @@
                             i.json().then((j) => {
                                 localStorage.setItem("email", email.value);
                                 localStorage.setItem("ip", j.ip);
-                                localStorage.setItem("autologin", a);
+                                localStorage.setItem("autologin", a || false);
                             });
                         })
                         .then((w) => {
@@ -316,9 +314,7 @@
                 i.style.boxShadow = "none";
             }
         });
-        console.log(index)
         if(index === 0 && checkEmail() == "email ok" && checkPass() == "pass ok" && confirmPass() =="pass ok") {
-            console.log("bla")
             fetch("https://hc-server.onrender.com/cracc", {
                 method: "POST",
             crossDomain: true,
