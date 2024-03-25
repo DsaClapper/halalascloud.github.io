@@ -43,39 +43,39 @@
         <p id="res" hidden="true" style="color: rgb(252, 4, 4); font-family: Supr; font-size: 15px"></p>
     </div>
     <div class="acccont" id="form" style="display: none;">
-        <a><img src="./i/halalas_cloud2.png" alt="Hc" width="200" height="200" /></a>
-        <input type="text" placeholder="Username" maxlength="20" class="creds" required="true" name="username" />
-        <input type="email" placeholder="Email" class="creds" required="true" name="email" />
-        <input type="password" placeholder="Password" class="creds" required="true" minlength="10" name="password" />
-        <input type="password" placeholder="Confirm Password" class="creds" required="true" id="cp" minlength="10"
-            name="cp" />
-        <input type="button" id="create" value="Create Account" />
-        <p style="
-          margin: 0px;
-          color: #fff;
-          font-family: Supr;
-          font-size: 15px;
-          -moz-user-select: text;
-          -webkit-user-select: text;
-          user-select: text;
-          position: relative;
-          right: 27%;
-          display: flex;
-          flex-direction: row;">
-            <input type="checkbox" id="remme" style="cursor: pointer;" />Remember
-            Me
-        </p><br>
-        <p style="
-    margin: 0px;
-    color: #fff;
-    font-family: Supr;
-    font-size: 17px;
-    -moz-user-select: text;
-    -webkit-user-select: text;
-    user-select: text;
-    position: relative;
-    right: 2px;">Already have an account? <b><a onclick="loginpage()"
-                    style="color: rgb(58, 58, 197); text-decoration: none;cursor: pointer;">Login</a></b></p>
+                        <a><img src="./i/halalas_cloud2.png" alt="Hc" width="200" height="200" /></a>
+                        <input type="text" placeholder="Username" maxlength="20" class="creds" required="true" name="username" id="username"/>
+                        <input type="email" placeholder="Email" class="creds" required="true" name="email" id="cremail"/>
+                        <input type="password" placeholder="Password" class="creds" required="true" minlength="8" name="password" id="crpassword"/>
+                        <input type="password" placeholder="Confirm Password" class="creds" required="true" id="cp" minlength="8"name="cp" />
+                        <input type="button" id="create" value="Create Account" />
+                        <p style="
+                          margin: 0px;
+                          color: #fff;
+                          font-family: Supr;
+                          font-size: 15px;
+                          -moz-user-select: text;
+                          -webkit-user-select: text;
+                          user-select: text;
+                          position: relative;
+                          right: 27%;
+                          display: flex;
+                          flex-direction: row;">
+                            <input type="checkbox" id="remme" style="cursor: pointer;" />Remember
+                            Me
+                        </p><br>
+                        <p style="
+                    margin: 0px;
+                    color: #fff;
+                    font-family: Supr;
+                    font-size: 17px;
+                    -moz-user-select: text;
+                    -webkit-user-select: text;
+                    user-select: text;
+                    position: relative;
+                    right: 2px;">Already have an account? <b><a onclick="loginpage()"
+                                    style="color: rgb(58, 58, 197); text-decoration: none;cursor: pointer;">Login</a></b></p>
+                    <b><p style="color: red;font-family: Supr; font-size: 16px;opacity: 0;display: block;" id="passmsg"></p></b>
     </div>
     <div class="dashcontainer">
         <div class="file-page" hidden="true" id="file-page-div">
@@ -136,9 +136,10 @@
         console.log(e);
         return "Servers Offline!";
     });
-    function login() {
-        let email = document.getElementById("email");
-        let pass = document.getElementById("pass");
+    function login(e, p, a) {
+        let email = e || document.getElementById("email");
+        let pass = p || document.getElementById("pass");
+        console.log(email)
         if (
             email.value === "" ||
             email.value.trim() === "" ||
@@ -175,7 +176,7 @@
                             i.json().then((j) => {
                                 localStorage.setItem("email", email.value);
                                 localStorage.setItem("ip", j.ip);
-                                localStorage.setItem("autologin", true);
+                                localStorage.setItem("autologin", a);
                             });
                         })
                         .then((w) => {
@@ -196,6 +197,7 @@
 
     async function autoLogin() {
         if (await !localStorage.getItem("email")) return;
+        if(localStorage.getItem("autologin") == false) return;
         fetch("https://hc-server.onrender.com/ipse", {
             method: "POST",
             crossDomain: true,
@@ -295,23 +297,123 @@
         })
     }
     function createAcc(e) {
-        let inputs = document.querySelectorAll("input");
+        let inputs = document.querySelectorAll(".creds");
+        let index = 0;
         inputs.forEach((i) => {
-            if (i.id === "create") return;
+            // if (i.id === "create") return;
             if (
                 (i.required === true && i.value === "") ||
                 i.value.trim() === "" ||
                 i.value.startsWith(" ")
             ) {
+                index++
                 i.style.boxShadow = "0px 0px 15px rgb(252, 4, 4)";
                 if (i.name === "cp") {
                     return (i.placeholder = `Please confirm your password`);
                 }
-                i.placeholder = `Please put your ${i.name.toLowerCase()}`;
+                i.placeholder = `Please write your ${i.name.toLowerCase()}`;
             } else {
                 i.style.boxShadow = "none";
             }
         });
+        console.log(index)
+        if(index === 0 && checkEmail() == "email ok" && checkPass() == "pass ok" && confirmPass() =="pass ok") {
+            console.log("bla")
+            fetch("http://localhost:8000/cracc", {
+                method: "POST",
+            crossDomain: true,
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+                body: JSON.stringify({
+                    username: document.getElementById("username").value,
+                    email: document.getElementById("cremail").value,
+                    password: document.getElementById("crpassword").value,
+                    autologin: document.getElementById("remme").checked
+                })
+            })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.text();
+            })
+            .then((data) => {
+                if (data == "have an account") {
+                    document.getElementById("cremail").value = "";
+                    document.getElementById("passmsg").innerHTML = "An account with this email already exists!"
+                    document.getElementById("passmsg").style.opacity = "100%"
+                    setTimeout(() => {
+                $("#passmsg").fadeOut(1000, () => {
+                    document.getElementById("passmsg").style.display = "block"
+                    document.getElementById("passmsg").style.opacity = "0%"
+                })
+            }, 2000);
+                } else {
+                    return login(document.getElementById("cremail"), document.getElementById("crpassword"), document.getElementById("remme").checked);
+                }
+            });
+        } else if(checkEmail() === "email not ok") {
+            document.getElementById("cremail").value = "";
+            document.getElementById("cremail").placeholder = "Please write a valid email!"
+        } else if(checkPass() =="pass not ok") {
+            document.getElementById("crpassword").value = "";
+            document.getElementById("passmsg").innerHTML = "Write a password that contains, at least <u>8 characters</u> , <u>1 uppercase character</u> , <u>1 lowercase letter</u> , <u>1 number</u> and <u>1 special character</u> !"
+            document.getElementById("passmsg").style.opacity = "100%"
+            setTimeout(() => {
+                $("#passmsg").fadeOut(1000, () => {
+                    document.getElementById("passmsg").style.display = "block"
+                    document.getElementById("passmsg").style.opacity = "0%"
+                })
+            }, 2000);
+        } else if(confirmPass() =="pass not ok") {
+            document.getElementById("cp").value = "";
+            document.getElementById("passmsg").style.opacity = "100%"
+            setTimeout(() => {
+                $("#passmsg").fadeOut(1000, () => {
+                    document.getElementById("passmsg").style.display = "block"
+                    document.getElementById("passmsg").style.opacity = "0%"
+                })
+            }, 2000);
+            document.getElementById("passmsg").innerHTML = "Please confirm the password you wrote!"
+        }
+    }
+
+    function checkEmail(){
+        let email = document.getElementById("cremail")
+        if(email.value.trim() === "" || email.value.startsWith(" ") || email.value === "") return;
+        if(email.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,5}$/g)) {
+            email.style.boxShadow = "0px 0px 15px rgb(20 217 19)";
+            return "email ok"
+        } else {
+            email.style.boxShadow = "rgb(252, 4, 4) 0px 0px 20px";
+            return "email not ok"
+        }
+    }
+    function checkPass(){
+        let pass = document.getElementById("crpassword")
+        if(pass.value.trim() === "" || pass.value.startsWith(" ") || pass.value === "") return;
+        if(pass.value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/g)) {
+            pass.style.boxShadow = "0px 0px 15px rgb(20 217 19)";
+            return "pass ok"
+        } else {
+            pass.style.boxShadow = "rgb(252, 4, 4) 0px 0px 20px";
+            return "pass not ok"
+        }
+    }
+    function confirmPass() {
+        let pass = document.getElementById("crpassword");
+        let confirm = document.getElementById("cp");
+        if(pass.value.trim() === "" || pass.value.startsWith(" ") || pass.value === "") return;
+        if(pass.value == confirm.value) {
+            confirm.style.boxShadow = "0px 0px 15px rgb(20 217 19)";
+            return "pass ok"
+        } else {
+            confirm.style.boxShadow = "rgb(252, 4, 4) 0px 0px 20px";
+            return "pass not ok"
+        }
     }
     function logout() {
         $(".logout-popup").show(1000);
@@ -331,6 +433,9 @@
             loginpage("logout")
         });
     }
+    document.getElementById("cp").addEventListener("keyup", confirmPass)
+    document.getElementById("cremail").addEventListener("keyup", checkEmail)
+    document.getElementById("crpassword").addEventListener("keyup", checkPass)
     document.getElementById("create").addEventListener("click", createAcc);
 
     async function pageload() {
