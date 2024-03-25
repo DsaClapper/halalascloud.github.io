@@ -83,10 +83,11 @@
         <div class="file-page" hidden="true" id="file-page-div">
             <div id="text-elements">
                 <h1 style="margin: 0">Files</h1>
-                <input type="file" id="file-box" hidden="true" accept=".png, .jpeg, .jpg, .gif, .txt" />
+                <input type="file" id="file-box" hidden="true" accept=".png, .jpeg, .jpg, .gif, .txt"/>
                 <input type="button" id="file-button" hidden="true" value="+" onclick="OpenSelection()" />
                 <p id="msg"></p>
             </div>
+            <div class="allfiles" id="allfiles"></div>
         </div>
         <div class="main-page" id="main-page" style="display: none">
             <div class="logout">
@@ -529,7 +530,7 @@
                     if (splitt.startsWith("image")) {
                         let img = document.createElement("img");
                         let newImg = document
-                            .getElementById("file-page-div")
+                            .getElementById("allfiles")
                             .appendChild(img);
                         newImg.id = objkeys[i];
                         newImg.className = "images";
@@ -538,7 +539,7 @@
                     } else if (splitt.startsWith("text")) {
                         let file = document.createElement("a");
                         let newFile = document
-                            .getElementById("file-page-div")
+                            .getElementById("allfiles")
                             .appendChild(file);
                         newFile.id = objkeys[i];
                         newFile.className = "files";
