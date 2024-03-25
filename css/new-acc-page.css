@@ -17,7 +17,6 @@ body {
     user-select: none;
     overflow: hidden;
     overscroll-behavior: none;
-    touch-action: manipulation;
     overscroll-behavior-y: contain;
     overscroll-behavior: contain;
     position: fixed;
