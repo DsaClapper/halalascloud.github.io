@@ -9,6 +9,7 @@ body {
             rgba(2, 0, 36, 1) 0%,
             rgba(9, 9, 121, 1) 86%,
             rgba(4, 110, 131, 1) 100%);
+            background-size: 100%;
     margin: 0;
     padding: 0;
     min-height: 100vh;
@@ -16,9 +17,6 @@ body {
     -ms-user-select: none;
     user-select: none;
     overflow: hidden;
-    overscroll-behavior: none;
-    overscroll-behavior-y: contain;
-    overscroll-behavior: contain;
     position: fixed;
     width: 100%;
 }
