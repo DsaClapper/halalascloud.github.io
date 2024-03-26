@@ -69,7 +69,6 @@ body {
 .file-page .allfiles * {
     border: 3px solid #b39e1a;
     margin: 4px;
-    max-height: 200px;
     /* border-top: 0px; */
     /* border-style: solid;
     border-color: #b39e1a;
