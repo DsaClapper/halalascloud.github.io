@@ -15,25 +15,25 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
     <link rel="stylesheet" href="./css/home.css" />
-<link rel="stylesheet" href="./css/new-acc-page.css">
-<link rel="stylesheet" href="./css/dash.css">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
-<script src="//code.jquery.com/jquery-1.12.4.js"></script>
-<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="./css/new-acc-page.css">
+    <link rel="stylesheet" href="./css/dash.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+        window.OneSignalDeferred = window.OneSignalDeferred || [];
+        OneSignalDeferred.push(function (OneSignal) {
+            OneSignal.init({
+                appId: "c51305de-fe30-42e6-ac9d-0e0287fc039c",
+                safari_web_id: "web.onesignal.auto.0860f031-816f-4b4e-9724-08fcd0b320db",
+                notifyButton: {
+                    enable: true,
+                },
+            });
+        });
+    </script>
 </head>
-<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-<script>
-  window.OneSignalDeferred = window.OneSignalDeferred || [];
-  OneSignalDeferred.push(function(OneSignal) {
-    OneSignal.init({
-      appId: "c51305de-fe30-42e6-ac9d-0e0287fc039c",
-      safari_web_id: "web.onesignal.auto.0860f031-816f-4b4e-9724-08fcd0b320db",
-      notifyButton: {
-        enable: true,
-      },
-    });
-  });
-</script>
 
 <body>
     <div id="bg"></div>
@@ -57,13 +57,16 @@
         <p id="res" hidden="true" style="color: rgb(252, 4, 4); font-family: Supr; font-size: 15px"></p>
     </div>
     <div class="acccont" id="form" style="display: none;">
-                        <a><img src="./i/halalas_cloud2.png" alt="Hc" width="200" height="200" /></a>
-                        <input type="text" placeholder="Username" maxlength="20" class="creds" required="true" name="username" id="username"/>
-                        <input type="email" placeholder="Email" class="creds" required="true" name="email" id="cremail"/>
-                        <input type="password" placeholder="Password" class="creds" required="true" minlength="8" name="password" id="crpassword"/>
-                        <input type="password" placeholder="Confirm Password" class="creds" required="true" id="cp" minlength="8"name="cp" />
-                        <input type="button" id="create" value="Create Account" />
-                        <p style="
+        <a><img src="./i/halalas_cloud2.png" alt="Hc" width="200" height="200" /></a>
+        <input type="text" placeholder="Username" maxlength="20" class="creds" required="true" name="username"
+            id="username" />
+        <input type="email" placeholder="Email" class="creds" required="true" name="email" id="cremail" />
+        <input type="password" placeholder="Password" class="creds" required="true" minlength="8" name="password"
+            id="crpassword" />
+        <input type="password" placeholder="Confirm Password" class="creds" required="true" id="cp" minlength="8"
+            name="cp" />
+        <input type="button" id="create" value="Create Account" />
+        <p style="
                           margin: 0px;
                           color: #fff;
                           font-family: Supr;
@@ -75,10 +78,10 @@
                           right: 27%;
                           display: flex;
                           flex-direction: row;">
-                            <input type="checkbox" id="remme" style="cursor: pointer;" />Remember
-                            Me
-                        </p><br>
-                        <p style="
+            <input type="checkbox" id="remme" style="cursor: pointer;" />Remember
+            Me
+        </p><br>
+        <p style="
                     margin: 0px;
                     color: #fff;
                     font-family: Supr;
@@ -88,14 +91,16 @@
                     user-select: text;
                     position: relative;
                     right: 2px;">Already have an account? <b><a onclick="loginpage()"
-                                    style="color: rgb(58, 58, 197); text-decoration: none;cursor: pointer;">Login</a></b></p>
-                    <b><p style="color: red;font-family: Supr; font-size: 16px;opacity: 0;display: block;" id="passmsg"></p></b>
+                    style="color: rgb(58, 58, 197); text-decoration: none;cursor: pointer;">Login</a></b></p>
+        <b>
+            <p style="color: red;font-family: Supr; font-size: 16px;opacity: 0;display: block;" id="passmsg"></p>
+        </b>
     </div>
     <div class="dashcontainer">
         <div class="file-page" hidden="true" id="file-page-div">
             <div id="text-elements">
                 <h1 style="margin: 0">Files</h1>
-                <input type="file" id="file-box" hidden="true" accept=".png, .jpeg, .jpg, .gif, .txt"/>
+                <input type="file" id="file-box" hidden="true" accept=".png, .jpeg, .jpg, .gif, .txt" />
                 <input type="button" id="file-button" hidden="true" value="+" onclick="OpenSelection()" />
                 <p id="msg"></p>
             </div>
@@ -210,7 +215,7 @@
 
     async function autoLogin() {
         if (await !localStorage.getItem("email")) return;
-        if(localStorage.getItem("autologin") == false) return;
+        if (localStorage.getItem("autologin") == false) return;
         fetch("https://hc-server.onrender.com/ipse", {
             method: "POST",
             crossDomain: true,
@@ -291,7 +296,7 @@
                 $(".cont").fadeIn(250, () => {
                     document.querySelectorAll(".cr").forEach(m => m.value = "")
                     $("#loading-page").fadeOut(500, () => {
-                        if(message === "logout") return window.location.reload()
+                        if (message === "logout") return window.location.reload()
                     })
                 })
             });
@@ -329,15 +334,15 @@
                 i.style.boxShadow = "none";
             }
         });
-        if(index === 0 && checkEmail() == "email ok" && checkPass() == "pass ok" && confirmPass() =="pass ok") {
+        if (index === 0 && checkEmail() == "email ok" && checkPass() == "pass ok" && confirmPass() == "pass ok") {
             fetch("https://hc-server.onrender.com/cracc", {
                 method: "POST",
-            crossDomain: true,
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-                "Access-Control-Allow-Origin": "*",
-            },
+                crossDomain: true,
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                },
                 body: JSON.stringify({
                     username: document.getElementById("username").value,
                     email: document.getElementById("cremail").value,
@@ -345,31 +350,31 @@
                     autologin: document.getElementById("remme").checked
                 })
             })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                return response.text();
-            })
-            .then((data) => {
-                if (data == "have an account") {
-                    document.getElementById("cremail").value = "";
-                    document.getElementById("passmsg").innerHTML = "An account with this email already exists!"
-                    document.getElementById("passmsg").style.opacity = "100%"
-                    setTimeout(() => {
-                $("#passmsg").fadeOut(1000, () => {
-                    document.getElementById("passmsg").style.display = "block"
-                    document.getElementById("passmsg").style.opacity = "0%"
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.text();
                 })
-            }, 2000);
-                } else {
-                    return login(document.getElementById("cremail"), document.getElementById("crpassword"), document.getElementById("remme").checked);
-                }
-            });
-        } else if(checkEmail() === "email not ok") {
+                .then((data) => {
+                    if (data == "have an account") {
+                        document.getElementById("cremail").value = "";
+                        document.getElementById("passmsg").innerHTML = "An account with this email already exists!"
+                        document.getElementById("passmsg").style.opacity = "100%"
+                        setTimeout(() => {
+                            $("#passmsg").fadeOut(1000, () => {
+                                document.getElementById("passmsg").style.display = "block"
+                                document.getElementById("passmsg").style.opacity = "0%"
+                            })
+                        }, 2000);
+                    } else {
+                        return login(document.getElementById("cremail"), document.getElementById("crpassword"), document.getElementById("remme").checked);
+                    }
+                });
+        } else if (checkEmail() === "email not ok") {
             document.getElementById("cremail").value = "";
             document.getElementById("cremail").placeholder = "Please write a valid email!"
-        } else if(checkPass() =="pass not ok") {
+        } else if (checkPass() == "pass not ok") {
             document.getElementById("crpassword").value = "";
             document.getElementById("passmsg").innerHTML = "Write a password that contains, at least <u>8 characters</u> , <u>1 uppercase character</u> , <u>1 lowercase letter</u> , <u>1 number</u> and <u>1 special character</u> !"
             document.getElementById("passmsg").style.opacity = "100%"
@@ -379,7 +384,7 @@
                     document.getElementById("passmsg").style.opacity = "0%"
                 })
             }, 2000);
-        } else if(confirmPass() =="pass not ok") {
+        } else if (confirmPass() == "pass not ok") {
             document.getElementById("cp").value = "";
             document.getElementById("passmsg").style.opacity = "100%"
             setTimeout(() => {
@@ -392,10 +397,10 @@
         }
     }
 
-    function checkEmail(){
+    function checkEmail() {
         let email = document.getElementById("cremail")
-        if(email.value.trim() === "" || email.value.startsWith(" ") || email.value === "") return;
-        if(email.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,5}$/g)) {
+        if (email.value.trim() === "" || email.value.startsWith(" ") || email.value === "") return;
+        if (email.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,5}$/g)) {
             email.style.boxShadow = "0px 0px 15px rgb(20 217 19)";
             return "email ok"
         } else {
@@ -403,10 +408,10 @@
             return "email not ok"
         }
     }
-    function checkPass(){
+    function checkPass() {
         let pass = document.getElementById("crpassword")
-        if(pass.value.trim() === "" || pass.value.startsWith(" ") || pass.value === "") return;
-        if(pass.value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/g)) {
+        if (pass.value.trim() === "" || pass.value.startsWith(" ") || pass.value === "") return;
+        if (pass.value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/g)) {
             pass.style.boxShadow = "0px 0px 15px rgb(20 217 19)";
             return "pass ok"
         } else {
@@ -417,8 +422,8 @@
     function confirmPass() {
         let pass = document.getElementById("crpassword");
         let confirm = document.getElementById("cp");
-        if(pass.value.trim() === "" || pass.value.startsWith(" ") || pass.value === "") return;
-        if(pass.value == confirm.value) {
+        if (pass.value.trim() === "" || pass.value.startsWith(" ") || pass.value === "") return;
+        if (pass.value == confirm.value) {
             confirm.style.boxShadow = "0px 0px 15px rgb(20 217 19)";
             return "pass ok"
         } else {
