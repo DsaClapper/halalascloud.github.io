@@ -582,6 +582,36 @@
     window.addEventListener("orientationchange", setBodyHeight);
     // Initial call to set body height
     setBodyHeight();
+
+    async function notificationRegister() {
+        const perm = await Notification.requestPermission();
+
+        if (perm !== "granted") {
+            throw new Error("not granted")
+        } else {
+            if (!localStorage.getItem("email")) return (window.location.reload());
+            const regist = await navigator.serviceWorker.register("sw.js");
+            let subscription = await regist.pushManager.getSubscription()
+
+            if(!subscription) return (window.location.reload())
+                const resp = await fetch("https://hc-server.onrender.com/save-subs", {
+                    method: "POST",
+                    crossDomain: true,
+            headers: {
+                "Content-Type": "application/json",
+            },
+                    body: JSON.stringify({
+                        sub: subscription, 
+                        em: localStorage.getItem("email")
+                    })
+                });
+            regist.showNotification("Hello world")
+        }
+    }
+
+    window.onload = notificationRegister
 </script>
+
+<script src="sw.js"></script>
 
 </html>
