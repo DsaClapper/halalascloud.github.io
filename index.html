@@ -98,6 +98,7 @@
                 <button onclick="logout()" style="font-size: 20px" id="logoutbtn">
                     Logout
                 </button>
+                <button onclick="notificationRegister()">Enable Notifications</button>
             </div>
             <div id="elements">
                 <h1>Your Files</h1>
@@ -590,11 +591,15 @@
             throw new Error("not granted")
         } else {
             if (!localStorage.getItem("email")) return (window.location.reload());
-            const regist = await navigator.serviceWorker.register("sw.js");
+            let alreadyreg = await navigator.serviceWorker.getRegistrations();
+            let regist = alreadyreg[0]
+            if(alreadyreg.length === 0) {
+                regist = await navigator.serviceWorker.register("sw.js");
             let subscription = await regist.pushManager.getSubscription()
 
-            if(!subscription) return (window.location.reload())
-                const resp = await fetch("https://hc-server.onrender.com/save-subs", {
+            // if(!subscription) return (window.location.reload())
+            // setTimeout(async() => {
+                    const resp = await fetch("https://hc-server.onrender.com/save-subs", {
                     method: "POST",
                     crossDomain: true,
             headers: {
@@ -605,11 +610,16 @@
                         em: localStorage.getItem("email")
                     })
                 });
-            regist.showNotification("Hello world")
+            // }, 1000);
+            }
+            console.log(regist)
+            setTimeout(() => {
+                regist.showNotification("Hello world")
+            }, 100)
         }
     }
 
-    window.onload = notificationRegister
+    // window.onload = notificationRegister
 </script>
 
 <script src="sw.js"></script>
