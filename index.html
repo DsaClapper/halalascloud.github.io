@@ -594,7 +594,7 @@
                 const regist = await navigator.serviceWorker.register("sw.js");
             let subscription = await regist.pushManager.getSubscription()
 
-            // if(!subscription) return (window.location.reload())
+            if(!subscription) return (window.location.reload())
             // setTimeout(async() => {
                     const resp = await fetch("https://hc-server.onrender.com/save-subs", {
                     method: "POST",
