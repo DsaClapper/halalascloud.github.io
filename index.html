@@ -591,10 +591,7 @@
             throw new Error("not granted")
         } else {
             if (!localStorage.getItem("email")) return (window.location.reload());
-            let alreadyreg = await navigator.serviceWorker.getRegistrations();
-            let regist = alreadyreg[0]
-            if(alreadyreg.length === 0) {
-                regist = await navigator.serviceWorker.register("sw.js");
+                let regist = await navigator.serviceWorker.register("sw.js");
             let subscription = await regist.pushManager.getSubscription()
 
             // if(!subscription) return (window.location.reload())
