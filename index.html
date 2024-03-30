@@ -13,8 +13,8 @@
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="cyan" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
-    <link rel="stylesheet" href="./css/home.css" />
+    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" /> -->
+    <link rel="stylesheet" href="./css/home.css" type="text/css" />
     <link rel="stylesheet" href="./css/new-acc-page.css">
     <link rel="stylesheet" href="./css/dash.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
@@ -92,13 +92,14 @@
                 <p id="msg"></p>
             </div>
             <div class="allfiles" id="allfiles"></div>
+            <br><br>
         </div>
         <div class="main-page" id="main-page" style="display: none">
             <div class="logout">
                 <button onclick="logout()" style="font-size: 20px" id="logoutbtn">
                     Logout
                 </button>
-                <button onclick="notificationRegister()">Enable Notifications</button>
+                <button onclick="main()">Enable Notifications</button>
             </div>
             <div id="elements">
                 <h1>Your Files</h1>
@@ -540,7 +541,7 @@
                         newImg.id = objkeys[i];
                         newImg.className = "images";
                         newImg.src = l;
-                        newImg.width = 200;
+                        newImg.width = 150;
                     } else if (splitt.startsWith("text")) {
                         let file = document.createElement("a");
                         let newFile = document
@@ -583,41 +584,13 @@
     window.addEventListener("orientationchange", setBodyHeight);
     // Initial call to set body height
     setBodyHeight();
-
-    async function notificationRegister() {
-        const perm = await Notification.requestPermission();
-
-        if (perm !== "granted") {
-            throw new Error("not granted")
-        } else {
-            if (!localStorage.getItem("email")) return (window.location.reload());
-                const regist = await navigator.serviceWorker.register("sw.js");
-            let subscription = await regist.pushManager.getSubscription()
-
-            if(!subscription) return (window.location.reload())
-            // setTimeout(async() => {
-                    const resp = await fetch("https://hc-server.onrender.com/save-subs", {
-                    method: "POST",
-                    crossDomain: true,
-            headers: {
-                "Content-Type": "application/json",
-            },
-                    body: JSON.stringify({
-                        sub: subscription, 
-                        em: localStorage.getItem("email")
-                    })
-                });
-            // }, 1000);
-            console.log(regist)
-            setTimeout(() => {
-                regist.showNotification("Hello world")
-            }, 100)
-        }
-    }
-
-    // window.onload = notificationRegister
+    document.getElementById("file-page-div").querySelectorAll("img").forEach(i => {
+        document.getElementById(i.id).addEventListener("touchmove", function () {
+            document.getElementById(i.id).scrollTop = 0
+        })
+    })
 </script>
-
+<script src="/js/script.js"></script>
 <script src="sw.js"></script>
 
 </html>
