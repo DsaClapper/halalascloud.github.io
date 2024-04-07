@@ -15,7 +15,7 @@ const urlBase64ToUint8Array = base64String => {
 }
 
 const saveSubscription = async (subscription, email) => {
-    const response = await fetch('https://hc-server.onrender.com/save-subs', {
+    const response = await fetch('http://localhost:10000/save-subs', {
         method: 'post',
         headers: { 'Content-type': "application/json" },
         body: JSON.stringify({
@@ -34,15 +34,21 @@ self.addEventListener("activate", async (e) => {
     let open = indexedDB.open("Hls Db", 1)
     open.onsuccess = async function(event) {
         let db = open.result
-        let transaction = db.transaction("user", "readwrite");
-        let objectStore = transaction.objectStore("user");
-        let em = objectStore.get("ssn").source.indexNames[0]
-        
-    const response = await saveSubscription(subscription, em)
-    console.log(response)
+        let transaction = db.transaction("users", "readwrite");
+        let objectStore = transaction.objectStore("users");
+        let keys = objectStore.getAllKeys()
+
+        keys.onsuccess = async() => {
+            let em = keys.result[0];
+            const response = await saveSubscription(subscription, em)
+            console.log(response)
+        }
     }
 })
 
 self.addEventListener("push", e => {
-    self.registration.showNotification("Wohoo!!", { body: e.data.text() })
+    self.registration.showNotification("Wohoo!!", { 
+        body: e.data.text(),
+    silent: true
+})
 })

@@ -14,20 +14,35 @@ const checkPermission = () => {
 
 const registerSW = async () => {
     let email = localStorage.getItem("email")
-    if(!email)return (window.location.reload());
+    if (!email) return (window.location.reload());
 
-    let db = indexedDB.open("Hls Db", 1)
+    const DBOpenRequest = window.indexedDB.open("Hls Db", 1);
 
-    db.onupgradeneeded = (event) => {
-        const d = event.target.result;
+    DBOpenRequest.onsuccess = async (event) => {
+        const db = DBOpenRequest.result
 
-        const objectStore = d.createObjectStore("user", { keyPath: "ssn" });
-        objectStore.createIndex(email, "email", { unique: false });
-
-        objectStore.transaction.oncomplete = (event) => {
-            const email = d.transaction("user", "readwrite").objectStore("user")
-            console.log(email)
+        let transaction = db.transaction("users", "readwrite");
+        let objectStore = transaction.objectStore("users");
+        const bla = objectStore.getAllKeys()
+        bla.onsuccess = () => {
+            if (bla.result.length === 0) {
+                console.log(bla.result)
+                objectStore.add({
+                    ssl: email
+                });
+            } else if (bla.result[0] !== email) {
+                objectStore.clear()
+                objectStore.add({
+                    ssl: email
+                });
+            }
         }
+    }
+    DBOpenRequest.onupgradeneeded = (event) => {
+        const db = event.target.result
+        db.createObjectStore("users", {
+            keyPath: "ssl",
+        });
     }
     const registration = await navigator.serviceWorker.register('sw.js');
     return registration;
