@@ -15,7 +15,7 @@ const urlBase64ToUint8Array = base64String => {
 }
 
 const saveSubscription = async (subscription, email) => {
-    const response = await fetch('http://localhost:10000/save-subs', {
+    const response = await fetch('https://hc-server.onrender.com/save-subs', {
         method: 'post',
         headers: { 'Content-type': "application/json" },
         body: JSON.stringify({
