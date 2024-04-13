@@ -13,7 +13,7 @@ const checkPermission = () => {
 }
 
 const registerSW = async () => {
-    let email = localStorage.getItem("email")
+    let email = localStorage.getItem("email");
     if (!email) return (window.location.reload());
 
     const DBOpenRequest = window.indexedDB.open("Hls Db", 1);

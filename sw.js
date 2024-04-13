@@ -21,7 +21,7 @@ const saveSubscription = async (subscription, email) => {
         body: JSON.stringify({
             sub: subscription,
             em: email
-    })
+        })
     })
     return response.json()
 }
@@ -32,13 +32,13 @@ self.addEventListener("activate", async (e) => {
         applicationServerKey: urlBase64ToUint8Array("BG_jzd40rAS03APRXVje5C9CDaTMLDpcckfHs5oA0umzvh-9UYUybphcjsTiDQ-Ru1hPoUEmYwvGDrihjYuarv4")
     })
     let open = indexedDB.open("Hls Db", 1)
-    open.onsuccess = async function(event) {
+    open.onsuccess = async function (event) {
         let db = open.result
         let transaction = db.transaction("users", "readwrite");
         let objectStore = transaction.objectStore("users");
         let keys = objectStore.getAllKeys()
 
-        keys.onsuccess = async() => {
+        keys.onsuccess = async () => {
             let em = keys.result[0];
             const response = await saveSubscription(subscription, em)
             console.log(response)
@@ -47,8 +47,17 @@ self.addEventListener("activate", async (e) => {
 })
 
 self.addEventListener("push", e => {
-    self.registration.showNotification("Wohoo!!", { 
+    let name = "Wohoo!!";
+    let options = {
         body: e.data.text(),
-    silent: true
+        silent: true
+    };
+    self.registration.showNotification(name, options);
 })
+
+self.addEventListener('notificationclick', function (event) {
+    event.notification.close();
+    event.waitUntil(
+        clients.openWindow("https://halalascloud.sytes.net/")
+    );
 })

@@ -2,9 +2,9 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <title>Halalas Cloud</title>
     <link rel="apple-touch-icon" sizes="180x180" href="./i/halalas_cloud_apple.png" />
     <link rel="apple-touch-icon-precomposed" sizes="180x180" href="./i/halalas_cloud_apple.png" />
@@ -15,8 +15,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" /> -->
     <link rel="stylesheet" href="./css/home.css" type="text/css" />
-    <link rel="stylesheet" href="./css/new-acc-page.css">
-    <link rel="stylesheet" href="./css/dash.css">
+    <link rel="stylesheet" href="./css/new-acc-page.css" />
+    <link rel="stylesheet" href="./css/dash.css" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
     <script src="//code.jquery.com/jquery-1.12.4.js"></script>
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -27,7 +27,14 @@
     <div class="cont">
         <a><img src="./i/halalas_cloud2.png" alt="Hc" width="200" height="200" /></a>
         <input type="email" id="email" placeholder="Email" autocomplete="off" class="cr" />
-        <input type="password" id="pass" placeholder="Password" autocomplete="off" class="cr" /><br />
+        <input type="password" id="pass" placeholder="Password" autocomplete="off" class="cr"/>
+        <div class="remMeElems" style="display: flex; justify-content: left; width: 100%;">
+            <label id="rememberMeLabel" style="margin: 0px;" class="remLabel2">
+                <input type="checkbox" class="reminput" name="rad">
+                <div class="rembox"></div>
+                <div class="rad-text">Remember me</div>
+            </label>
+        </div><br/>
         <button onclick="login()" id="submit" class="but">Login</button>
         <p style="
           color: white;
@@ -38,12 +45,15 @@
           user-select: text;
         " id="cracc">
             Don't have an account?
-            <b><a onclick="accpage()" style="color: rgb(58, 58, 197); text-decoration: none;cursor: pointer;">Create
-                    one</a></b>
+            <b><a onclick="accpage()" style="
+              color: rgb(58, 58, 197);
+              text-decoration: none;
+              cursor: pointer;
+            ">Create one</a></b>
         </p>
         <p id="res" hidden="true" style="color: rgb(252, 4, 4); font-family: Supr; font-size: 15px"></p>
     </div>
-    <div class="acccont" id="form" style="display: none;">
+    <div class="acccont" id="form" style="display: none">
         <a><img src="./i/halalas_cloud2.png" alt="Hc" width="200" height="200" /></a>
         <input type="text" placeholder="Username" maxlength="20" class="creds" required="true" name="username"
             id="username" />
@@ -54,33 +64,47 @@
             name="cp" />
         <input type="button" id="create" value="Create Account" />
         <p style="
-                          margin: 0px;
-                          color: #fff;
-                          font-family: Supr;
-                          font-size: 15px;
-                          -moz-user-select: text;
-                          -webkit-user-select: text;
-                          user-select: text;
-                          position: relative;
-                          right: 27%;
-                          display: flex;
-                          flex-direction: row;">
-            <input type="checkbox" id="remme" style="cursor: pointer;" />Remember
-            Me
-        </p><br>
+          margin: 0px;
+          color: #fff;
+          font-family: Supr;
+          font-size: 15px;
+          -moz-user-select: text;
+          -webkit-user-select: text;
+          user-select: text;
+          position: relative;
+          right: 27%;
+          display: flex;
+          flex-direction: row;
+        ">
+            <input type="checkbox" id="remme" style="cursor: pointer"/>Remember Me
+        </p>
+        <br />
         <p style="
-                    margin: 0px;
-                    color: #fff;
-                    font-family: Supr;
-                    font-size: 17px;
-                    -moz-user-select: text;
-                    -webkit-user-select: text;
-                    user-select: text;
-                    position: relative;
-                    right: 2px;">Already have an account? <b><a onclick="loginpage()"
-                    style="color: rgb(58, 58, 197); text-decoration: none;cursor: pointer;">Login</a></b></p>
+          margin: 0px;
+          color: #fff;
+          font-family: Supr;
+          font-size: 17px;
+          -moz-user-select: text;
+          -webkit-user-select: text;
+          user-select: text;
+          position: relative;
+          right: 2px;
+        ">
+            Already have an account?
+            <b><a onclick="loginpage()" style="
+              color: rgb(58, 58, 197);
+              text-decoration: none;
+              cursor: pointer;
+            ">Login</a></b>
+        </p>
         <b>
-            <p style="color: red;font-family: Supr; font-size: 16px;opacity: 0;display: block;" id="passmsg"></p>
+            <p style="
+            color: red;
+            font-family: Supr;
+            font-size: 16px;
+            opacity: 0;
+            display: block;
+          " id="passmsg"></p>
         </b>
     </div>
     <div class="dashcontainer">
@@ -92,7 +116,7 @@
                 <p id="msg"></p>
             </div>
             <div class="allfiles" id="allfiles"></div>
-            <br><br>
+            <br /><br />
         </div>
         <div class="main-page" id="main-page" style="display: none">
             <div class="logout">
@@ -109,19 +133,19 @@
         <div class="logout-popup" hidden="true" style="display: none" id="logout-popup">
             <div id="logout-buttons" class="logout-buttons">
                 <button id="confirm" style="
-            margin: 10px;
-            padding: 10px;
-            background-color: rgb(9, 9, 121);
-            cursor: pointer;
-          ">
+              margin: 10px;
+              padding: 10px;
+              background-color: rgb(9, 9, 121);
+              cursor: pointer;
+            ">
                     Confirm
                 </button>
                 <button id="cancel" style="
-            margin: 10px;
-            padding: 10px;
-            cursor: pointer;
-            background-color: white;
-          ">
+              margin: 10px;
+              padding: 10px;
+              cursor: pointer;
+              background-color: white;
+            ">
                     Cancel
                 </button>
             </div>
@@ -157,6 +181,9 @@
         ) {
             return (email.value = ""), (pass.value = "");
         }
+        if(document.getElementsByClassName("reminput")[0].checked) {
+            a = true
+        }
         fetch("https://hc-server.onrender.com/cr", {
             method: "POST",
             crossDomain: true,
@@ -187,7 +214,7 @@
                             });
                         })
                         .then((w) => {
-                            dashpage()
+                            dashpage();
                         });
                 } else {
                     document.getElementById("res").hidden = false;
@@ -241,7 +268,6 @@
         }
     }
 
-
     function progressBar() {
         let i = 0;
         let pr = document.getElementById("progress");
@@ -273,23 +299,23 @@
         $(".cont").fadeOut(250, () => {
             $("#loading-page").fadeIn(1000, () => {
                 $("#form").fadeIn(250, () => {
-                    $("#loading-page").fadeOut(500)
-                })
+                    $("#loading-page").fadeOut(500);
+                });
             });
-        })
+        });
     }
     function loginpage(message) {
         progressBar();
         $("#form").fadeOut(250, () => {
             $("#loading-page").fadeIn(1000, () => {
                 $(".cont").fadeIn(250, () => {
-                    document.querySelectorAll(".cr").forEach(m => m.value = "")
+                    document.querySelectorAll(".cr").forEach((m) => (m.value = ""));
                     $("#loading-page").fadeOut(500, () => {
-                        if (message === "logout") return window.location.reload()
-                    })
-                })
+                        if (message === "logout") return window.location.reload();
+                    });
+                });
             });
-        })
+        });
     }
     function dashpage() {
         progressBar();
@@ -298,10 +324,10 @@
                 $(".main-page").fadeIn(250, () => {
                     $("#loading-page").fadeOut(500, () => {
                         getFiles();
-                    })
-                })
+                    });
+                });
             });
-        })
+        });
     }
     function createAcc(e) {
         let inputs = document.querySelectorAll(".creds");
@@ -313,7 +339,7 @@
                 i.value.trim() === "" ||
                 i.value.startsWith(" ")
             ) {
-                index++
+                index++;
                 i.style.boxShadow = "0px 0px 15px rgb(252, 4, 4)";
                 if (i.name === "cp") {
                     return (i.placeholder = `Please confirm your password`);
@@ -323,7 +349,12 @@
                 i.style.boxShadow = "none";
             }
         });
-        if (index === 0 && checkEmail() == "email ok" && checkPass() == "pass ok" && confirmPass() == "pass ok") {
+        if (
+            index === 0 &&
+            checkEmail() == "email ok" &&
+            checkPass() == "pass ok" &&
+            confirmPass() == "pass ok"
+        ) {
             fetch("https://hc-server.onrender.com/cracc", {
                 method: "POST",
                 crossDomain: true,
@@ -336,8 +367,8 @@
                     username: document.getElementById("username").value,
                     email: document.getElementById("cremail").value,
                     password: document.getElementById("crpassword").value,
-                    autologin: document.getElementById("remme").checked
-                })
+                    autologin: document.getElementById("remme").checked,
+                }),
             })
                 .then((response) => {
                     if (!response.ok) {
@@ -348,76 +379,103 @@
                 .then((data) => {
                     if (data == "have an account") {
                         document.getElementById("cremail").value = "";
-                        document.getElementById("passmsg").innerHTML = "An account with this email already exists!"
-                        document.getElementById("passmsg").style.opacity = "100%"
+                        document.getElementById("passmsg").innerHTML =
+                            "An account with this email already exists!";
+                        document.getElementById("passmsg").style.opacity = "100%";
                         setTimeout(() => {
                             $("#passmsg").fadeOut(1000, () => {
-                                document.getElementById("passmsg").style.display = "block"
-                                document.getElementById("passmsg").style.opacity = "0%"
-                            })
+                                document.getElementById("passmsg").style.display = "block";
+                                document.getElementById("passmsg").style.opacity = "0%";
+                            });
                         }, 2000);
                     } else {
-                        return login(document.getElementById("cremail"), document.getElementById("crpassword"), document.getElementById("remme").checked);
+                        return login(
+                            document.getElementById("cremail"),
+                            document.getElementById("crpassword"),
+                            document.getElementById("remme").checked
+                        );
                     }
                 });
         } else if (checkEmail() === "email not ok") {
             document.getElementById("cremail").value = "";
-            document.getElementById("cremail").placeholder = "Please write a valid email!"
+            document.getElementById("cremail").placeholder =
+                "Please write a valid email!";
         } else if (checkPass() == "pass not ok") {
             document.getElementById("crpassword").value = "";
-            document.getElementById("passmsg").innerHTML = "Write a password that contains, at least <u>8 characters</u> , <u>1 uppercase character</u> , <u>1 lowercase letter</u> , <u>1 number</u> and <u>1 special character</u> !"
-            document.getElementById("passmsg").style.opacity = "100%"
+            document.getElementById("passmsg").innerHTML =
+                "Write a password that contains, at least <u>8 characters</u> , <u>1 uppercase character</u> , <u>1 lowercase letter</u> , <u>1 number</u> and <u>1 special character</u> !";
+            document.getElementById("passmsg").style.opacity = "100%";
             setTimeout(() => {
                 $("#passmsg").fadeOut(1000, () => {
-                    document.getElementById("passmsg").style.display = "block"
-                    document.getElementById("passmsg").style.opacity = "0%"
-                })
+                    document.getElementById("passmsg").style.display = "block";
+                    document.getElementById("passmsg").style.opacity = "0%";
+                });
             }, 2000);
         } else if (confirmPass() == "pass not ok") {
             document.getElementById("cp").value = "";
-            document.getElementById("passmsg").style.opacity = "100%"
+            document.getElementById("passmsg").style.opacity = "100%";
             setTimeout(() => {
                 $("#passmsg").fadeOut(1000, () => {
-                    document.getElementById("passmsg").style.display = "block"
-                    document.getElementById("passmsg").style.opacity = "0%"
-                })
+                    document.getElementById("passmsg").style.display = "block";
+                    document.getElementById("passmsg").style.opacity = "0%";
+                });
             }, 2000);
-            document.getElementById("passmsg").innerHTML = "Please confirm the password you wrote!"
+            document.getElementById("passmsg").innerHTML =
+                "Please confirm the password you wrote!";
         }
     }
 
     function checkEmail() {
-        let email = document.getElementById("cremail")
-        if (email.value.trim() === "" || email.value.startsWith(" ") || email.value === "") return;
+        let email = document.getElementById("cremail");
+        if (
+            email.value.trim() === "" ||
+            email.value.startsWith(" ") ||
+            email.value === ""
+        )
+            return;
         if (email.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,5}$/g)) {
             email.style.boxShadow = "0px 0px 15px rgb(20 217 19)";
-            return "email ok"
+            return "email ok";
         } else {
             email.style.boxShadow = "rgb(252, 4, 4) 0px 0px 20px";
-            return "email not ok"
+            return "email not ok";
         }
     }
     function checkPass() {
-        let pass = document.getElementById("crpassword")
-        if (pass.value.trim() === "" || pass.value.startsWith(" ") || pass.value === "") return;
-        if (pass.value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/g)) {
+        let pass = document.getElementById("crpassword");
+        if (
+            pass.value.trim() === "" ||
+            pass.value.startsWith(" ") ||
+            pass.value === ""
+        )
+            return;
+        if (
+            pass.value.match(
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/g
+            )
+        ) {
             pass.style.boxShadow = "0px 0px 15px rgb(20 217 19)";
-            return "pass ok"
+            return "pass ok";
         } else {
             pass.style.boxShadow = "rgb(252, 4, 4) 0px 0px 20px";
-            return "pass not ok"
+            return "pass not ok";
         }
     }
     function confirmPass() {
         let pass = document.getElementById("crpassword");
         let confirm = document.getElementById("cp");
-        if (pass.value.trim() === "" || pass.value.startsWith(" ") || pass.value === "") return;
+        if (
+            pass.value.trim() === "" ||
+            pass.value.startsWith(" ") ||
+            pass.value === ""
+        )
+            return;
         if (pass.value == confirm.value) {
             confirm.style.boxShadow = "0px 0px 15px rgb(20 217 19)";
-            return "pass ok"
+            return "pass ok";
         } else {
             confirm.style.boxShadow = "rgb(252, 4, 4) 0px 0px 20px";
-            return "pass not ok"
+            return "pass not ok";
         }
     }
     function logout() {
@@ -430,17 +488,24 @@
             document.getElementById("main-page").style.filter = "blur(0px)";
             document.getElementById("main-page").style.transition = "filter 2s";
         });
-        $("#confirm").click(() => {
+        $("#confirm").click(async () => {
             localStorage.clear();
+            await navigator.serviceWorker
+                .getRegistrations()
+                .then((registrations) => {
+                    registrations.forEach((registration) => {
+                        registration.unregister();
+                    });
+                });
             document.getElementById("main-page").style = "display: none";
             document.getElementById("logout-popup").style = "display: none";
-            document.getElementById("logout-popup").hidden = true
-            loginpage("logout")
+            document.getElementById("logout-popup").hidden = true;
+            loginpage("logout");
         });
     }
-    document.getElementById("cp").addEventListener("keyup", confirmPass)
-    document.getElementById("cremail").addEventListener("keyup", checkEmail)
-    document.getElementById("crpassword").addEventListener("keyup", checkPass)
+    document.getElementById("cp").addEventListener("keyup", confirmPass);
+    document.getElementById("cremail").addEventListener("keyup", checkEmail);
+    document.getElementById("crpassword").addEventListener("keyup", checkPass);
     document.getElementById("create").addEventListener("click", createAcc);
 
     async function pageload() {
@@ -535,9 +600,7 @@
                     let splitt = l.split(";")[0].split(":")[1];
                     if (splitt.startsWith("image")) {
                         let img = document.createElement("img");
-                        let newImg = document
-                            .getElementById("allfiles")
-                            .appendChild(img);
+                        let newImg = document.getElementById("allfiles").appendChild(img);
                         newImg.id = objkeys[i];
                         newImg.className = "images";
                         newImg.src = l;
@@ -584,11 +647,16 @@
     window.addEventListener("orientationchange", setBodyHeight);
     // Initial call to set body height
     setBodyHeight();
-    document.getElementById("file-page-div").querySelectorAll("img").forEach(i => {
-        document.getElementById(i.id).addEventListener("touchmove", function () {
-            document.getElementById(i.id).scrollTop = 0
-        })
-    })
+    document
+        .getElementById("file-page-div")
+        .querySelectorAll("img")
+        .forEach((i) => {
+            document
+                .getElementById(i.id)
+                .addEventListener("touchmove", function () {
+                    document.getElementById(i.id).scrollTop = 0;
+                });
+        });
 </script>
 <script src="/js/script.js"></script>
 <script src="sw.js"></script>
