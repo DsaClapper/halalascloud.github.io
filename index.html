@@ -24,10 +24,10 @@
 
 <body>
     <div id="bg"></div>
-    <div class="cont">
+    <div class="cont" style="display: none;" id="cont">
         <a><img src="./i/halalas_cloud2.png" alt="Hc" width="200" height="200" /></a>
-        <input type="email" id="email" placeholder="Email" autocomplete="off" class="cr" />
-        <input type="password" id="pass" placeholder="Password" autocomplete="off" class="cr"/>
+        <input type="email" id="email" placeholder="Email" autocomplete="on" class="cr" />
+        <input type="password" id="pass" placeholder="Password" autocomplete="on" class="cr"/>
         <div class="remMeElems" style="display: flex; justify-content: left; width: 100%;">
             <label id="rememberMeLabel" style="margin: 0px;" class="remLabel2">
                 <input type="checkbox" class="reminput" name="rad">
@@ -230,8 +230,7 @@
     }
 
     async function autoLogin() {
-        if (await !localStorage.getItem("email")) return;
-        if (localStorage.getItem("autologin") == false) return;
+if (await !localStorage.getItem("email") || await localStorage.getItem("autologin") == "false") return document.getElementById("cont").style.removeProperty("display");
         fetch("https://hc-server.onrender.com/ipse", {
             method: "POST",
             crossDomain: true,
