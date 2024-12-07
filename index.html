@@ -450,14 +450,13 @@ if (await !localStorage.getItem("email") || await localStorage.getItem("autologi
                 });
             }, 2000);
         } else if (confirmPass() == "pass not ok") {
-            document.getElementById("cp").value = "";
             document.getElementById("passmsg").style.opacity = "100%";
             setTimeout(() => {
                 $("#passmsg").fadeOut(1000, () => {
                     document.getElementById("passmsg").style.display = "block";
                     document.getElementById("passmsg").style.opacity = "0%";
                 });
-            }, 2000);
+            }, 5000);
             document.getElementById("passmsg").innerHTML =
                 "Please confirm the password you wrote!";
         }
