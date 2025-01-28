@@ -603,8 +603,7 @@ if (await !localStorage.getItem("email") || await localStorage.getItem("autologi
                         document.getElementById("msg").innerHTML =
                             "This Image Already Exists On The Cloud!";
                     } else {
-                        document.getElementById("allfiles").innerHtml = "";
-                        getFiles();
+                        getFiles("clear");
                     }
                 });
             fileInput.value = "";
@@ -612,7 +611,7 @@ if (await !localStorage.getItem("email") || await localStorage.getItem("autologi
         reader.readAsDataURL(file);
     });
 
-    function getFiles() {
+    function getFiles(calldata) {
         fetch("https://hc-server.onrender.com/bringimgs", {
             method: "POST",
             crossDomain: true,
@@ -630,6 +629,9 @@ if (await !localStorage.getItem("email") || await localStorage.getItem("autologi
                 return response.text();
             })
             .then((data) => {
+                                if(calldata != undefined && calldata === "clear") {
+                    document.getElementById("allfiles").innerHTML = "";
+                };
                 let json = JSON.parse(data);
                 let objval = Object.values(json).map((m) => m.base);
                 let objkeys = Object.keys(json);
