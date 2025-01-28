@@ -603,7 +603,8 @@ if (await !localStorage.getItem("email") || await localStorage.getItem("autologi
                         document.getElementById("msg").innerHTML =
                             "This Image Already Exists On The Cloud!";
                     } else {
-                        window.location.reload();
+                        document.getElementById("allfiles").innerHtml = "";
+                        getFiles();
                     }
                 });
             fileInput.value = "";
