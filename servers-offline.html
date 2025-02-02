@@ -3,8 +3,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servers Offline</title>
+    <link rel="stylesheet" href="./css/offline.css">
 </head>
 <body>
-    Servers Offline
+    <div class="offlinescreen">
+        <div id="offlineMessage" class="offlineMessage">
+            Servers offline! Trying to reconnect!
+            <div class="offline-loader" id="offline-loader" style="display: none;"></div>
+            <div class="online-loader" id="online-loader" style="display: none;"></div>
+        </div>
+    </div>
 </body>
 </html>
