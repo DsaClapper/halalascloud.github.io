@@ -1,4 +1,4 @@
-const API_BASE = "http://192.168.2.4:3000/api";
+const API_BASE = "https://uniserver-0z7e.onrender.com/api";
 
 /* ===== INIT ===== */
 window.onload = () => {
