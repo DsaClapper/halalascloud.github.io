@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Course Web App</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4f46e5">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="loginView" class="card login">
+  <h2>Login</h2>
+  <input id="email" type="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
+  <button class="primary" onclick="login()">Login</button>
+  <div id="loginError"></div>
+</div>
+
+<!-- APP -->
+<div id="appView" class="card app" style="display:none;">
+  <div class="header">
+    <h2>Your Courses</h2>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <div id="courseList"></div>
+  <div id="gradesPanel"></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
