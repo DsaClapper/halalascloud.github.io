@@ -1,39 +1,101 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Course Web App</title>
+const API_BASE = "https://uniserver-0z7e.onrender.com/api";
 
-  <!-- PWA -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#4f46e5">
+/* ===== INIT ===== */
+window.onload = () => {
+  registerSW();
+  if(!localStorage.getItem("email") || !localStorage.getItem("password")) return;
+  login(localStorage.getItem("email"), localStorage.getItem("password"));
+};
 
-  <link rel="stylesheet" href="styles.css">
-</head>
+/* ===== LOGIN ===== */
+async function login(email, password) {
+  if(!email || !password) {
+    email = document.getElementById("email").value;
+    password = document.getElementById("password").value;
+  }
 
-<body>
+  try {
+    const payload = JSON.stringify({ email, password });
+    const res = await fetch(`${API_BASE}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: `${payload}`
+    });
 
-<!-- LOGIN -->
-<div id="loginView" class="card login">
-  <h2>Login</h2>
-  <input id="email" type="email" placeholder="Email">
-  <input id="password" type="password" placeholder="Password">
-  <button class="primary" onclick="login()">Login</button>
-  <div id="loginError"></div>
-</div>
+    const data = await res.text();
+    if (data === "Invalid") throw new Error("Invalid credentials");
+    if(data === "Fill")throw new Error("Fill your credentials");
+    console.log(data)
+    localStorage.setItem("email", email);
+    localStorage.setItem("password", password);
+    loadApp(data);
 
-<!-- APP -->
-<div id="appView" class="card app" style="display:none;">
-  <div class="header">
-    <h2>Your Courses</h2>
-    <button onclick="logout()">Logout</button>
-  </div>
+  } catch (err) {
+    console.log(err)
+    document.getElementById("loginError").innerText = err.message;
+  }
+}
 
-  <div id="courseList"></div>
-  <div id="gradesPanel"></div>
-</div>
+/* ===== LOAD APP ===== */
+async function loadApp(data) {
+  loginView.style.display = "none";
+  appView.style.display = "block";
 
-<script src="app.js"></script>
-</body>
-</html>
+  console.log(JSON.parse(data))
+
+  const courses = JSON.parse(data);
+  renderCourses(courses);
+}
+
+/* ===== RENDER COURSES ===== */
+function renderCourses(courses) {
+  courseList.innerHTML = "";
+
+  Object.values(courses).forEach(course => {
+    const div = document.createElement("div");
+    div.className = "course";
+
+    div.innerHTML = `
+      <span>${course.name}</span>`;
+
+    div.onclick = e => {
+      if (e.target.tagName === "A") return;
+      showGrades(course);
+    };
+
+    courseList.appendChild(div);
+  });
+}
+
+/* ===== GRADES ===== */
+function showGrades(course) {
+  gradesPanel.innerHTML = `<h3>${course.name}</h3>`;
+
+  if (!Object.keys(course.grades).length) {
+    gradesPanel.innerHTML += `<p>No grades yet</p>`;
+    return;
+  }
+
+  Object.values(course.grades).forEach(g => {
+    gradesPanel.innerHTML += `
+      <div class="grade-row">
+        <span>${g.name}</span>
+        <strong>${g.number}</strong>
+      </div>
+    `;
+  });
+}
+
+/* ===== LOGOUT ===== */
+function logout() {
+  localStorage.removeItem("email");
+  localStorage.removeItem("password");
+  location.reload();
+}
+
+/* ===== SERVICE WORKER ===== */
+function registerSW() {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js");
+  }
+}
