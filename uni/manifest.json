@@ -1,7 +1,7 @@
 {
   "name": "Course Web App",
   "short_name": "Courses",
-  "start_url": "/index.html",
+  "start_url": "https://cloud.halalas-services.xyz/uni/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4f46e5",
